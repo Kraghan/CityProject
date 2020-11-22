@@ -8178,6 +8178,8 @@
             <e p="NiagaraCommon.cpp" t="Include" />
             <e p="NiagaraComponent.cpp" t="Include" />
             <e p="NiagaraComponentPool.cpp" t="Include" />
+            <e p="NiagaraComponentRemoveFromPool.cpp" t="Include" />
+            <e p="NiagaraComponentRemoveFromPool.h" t="Include" />
             <e p="NiagaraConstants.cpp" t="Include" />
             <e p="NiagaraCrashReporterHandler.cpp" t="Include" />
             <e p="NiagaraDataInterface.cpp" t="Include" />
@@ -8542,6 +8544,8 @@
               <e p="NiagaraParameterViewModel.cpp" t="Include" />
               <e p="NiagaraParameterViewModel.h" t="Include" />
               <e p="NiagaraScratchPadScriptViewModel.cpp" t="Include" />
+              <e p="NiagaraScratchPadUtilities.cpp" t="Include" />
+              <e p="NiagaraScratchPadUtilities.h" t="Include" />
               <e p="NiagaraScratchPadViewModel.cpp" t="Include" />
               <e p="NiagaraScriptGraphViewModel.cpp" t="Include" />
               <e p="NiagaraScriptGraphViewModel.h" t="Include" />
@@ -10097,24 +10101,32 @@
         </e>
       </e>
     </e>
-    <e p="C:\Program Files\Epic Games\UE_4.25\Engine\Plugins\Marketplace\ST_ExportPNG" t="Include">
+    <e p="C:\Program Files\Epic Games\UE_4.25\Engine\Plugins\Marketplace\GOAP" t="Include">
+      <e p="GOAP.uplugin" t="Include" />
       <e p="Resources" t="Include">
         <e p="Icon128.png" t="Include" />
       </e>
       <e p="Source" t="Include">
-        <e p="ST_ExportPNGEditor" t="Include">
+        <e p="GOAP" t="Include">
+          <e p="GOAP.Build.cs" t="Include" />
           <e p="Private" t="Include">
-            <e p="ST_ExportPNGEditorModule.cpp" t="Include" />
-            <e p="ST_TextureExporterPNG.cpp" t="Include" />
+            <e p="GOAP.cpp" t="Include" />
+            <e p="GOAPAction.cpp" t="Include" />
+            <e p="GOAPController.cpp" t="Include" />
+            <e p="GOAPNode.cpp" t="Include" />
+            <e p="GOAPPlanner.cpp" t="Include" />
+            <e p="GOAPWorldState.cpp" t="Include" />
           </e>
           <e p="Public" t="Include">
-            <e p="ST_ExportPNGEditorModule.h" t="Include" />
-            <e p="ST_TextureExporterPNG.h" t="Include" />
+            <e p="GOAP.h" t="Include" />
+            <e p="GOAPAction.h" t="Include" />
+            <e p="GOAPController.h" t="Include" />
+            <e p="GOAPNode.h" t="Include" />
+            <e p="GOAPPlanner.h" t="Include" />
+            <e p="GOAPWorldState.h" t="Include" />
           </e>
-          <e p="ST_ExportPNGEditor.build.cs" t="Include" />
         </e>
       </e>
-      <e p="ST_ExportPNG.uplugin" t="Include" />
     </e>
     <e p="C:\Program Files\Epic Games\UE_4.25\Engine\Plugins\Media\AjaMedia" t="Include">
       <e p="AjaMedia.uplugin" t="Include" />
@@ -43176,6 +43188,8 @@
         <e p="NVIDIA" t="Include">
           <e p="NVaftermath" t="Include">
             <e p="Aftermath.tps" t="Include" />
+            <e p="Defines.h" t="Include" />
+            <e p="GFSDK_Aftermath.h" t="Include" />
             <e p="NVaftermath.Build.cs" t="Include" />
           </e>
           <e p="nvapi" t="Include">
@@ -43403,9 +43417,10 @@
       <e p="UE4Editor.Target.cs" t="Include" />
       <e p="UE4Game.Target.cs" t="Include" />
     </e>
-    <e p="C:\Users\Jordan\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Jordan\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_CityProject.-854929672.00" t="ExcludeRecursive" />
-    <e p="C:\Users\Jordan\Documents\Unreal Projects\CityProject" t="IncludeFlat">
+    <e p="C:\Users\Kraghan\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Kraghan\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_CityProject.-2087250293.00" t="ExcludeRecursive" />
+    <e p="D:\Users\Kraghan\Workspace\Jeux\CityProject" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
       <e p="CityProject.sln" t="IncludeFlat" />
       <e p="CityProject.uproject" t="Include" />
       <e p="Config" t="Include">
@@ -43423,6 +43438,10 @@
       <e p="packages" t="ExcludeRecursive" />
       <e p="Source" t="Include">
         <e p="CityProject" t="Include">
+          <e p="City" t="Include">
+            <e p="CityGenerator.cpp" t="Include" />
+            <e p="CityGenerator.h" t="Include" />
+          </e>
           <e p="CityProject.Build.cs" t="Include" />
           <e p="CityProject.cpp" t="Include" />
           <e p="CityProject.h" t="Include" />

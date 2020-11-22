@@ -4,11 +4,32 @@
     <projectFile>Intermediate/ProjectFiles/CityProject.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05103f26-338c-44e0-87b4-557ed8ff4898" name="Default Changelist" comment="" />
+    <list default="true" id="05103f26-338c-44e0-87b4-557ed8ff4898" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" />
+        <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1kZ4l2RuPBIQsiYqYyetqL0qU9M" />
   <component name="ProjectViewState">
@@ -137,15 +158,26 @@
       <option name="presentableId" value="Default" />
       <updated>1605894926812</updated>
       <workItem from="1605894953748" duration="366000" />
+      <workItem from="1605970623614" duration="934000" />
+      <workItem from="1605983779136" duration="4546000" />
+      <workItem from="1605998836036" duration="5451000" />
+      <workItem from="1606055775702" duration="526000" />
+      <workItem from="1606056388835" duration="9334000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="821" y="245" key="RiderGenerateDialog" timestamp="1606062796616">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="821" y="245" key="RiderGenerateDialog/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1606062796616" />
   </component>
 </project>
