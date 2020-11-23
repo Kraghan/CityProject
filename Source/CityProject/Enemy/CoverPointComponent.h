@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
-#include "Gomorrah/Player/GomorrahBaseCharacter.h"
+//#include "Gomorrah/Player/GomorrahBaseCharacter.h"
 
 #include "CoverPointComponent.generated.h"
 
@@ -26,7 +26,7 @@ struct FCoverageData
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class GOMORRAH_API UCoverPointComponent : public USceneComponent
+class CITYPROJECT_API UCoverPointComponent : public USceneComponent
 {
 	GENERATED_BODY()
 
@@ -37,8 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Cover")
 	bool CoverIsFree() const;
 	
-	UPROPERTY(BlueprintReadWrite, VisibleInstanceOnly, Category="Cover")
-	AGomorrahBaseCharacter* CharacterInCover = nullptr;
+	//UPROPERTY(BlueprintReadWrite, VisibleInstanceOnly, Category="Cover")
+	//AGomorrahBaseCharacter* CharacterInCover = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Cover")
 	TArray<FCoverageData> CoverageDatas;

@@ -26,7 +26,7 @@ UCoverPointComponent::UCoverPointComponent()
 
 bool UCoverPointComponent::CoverIsFree() const
 {
-	return CharacterInCover != nullptr;
+	return false; //CharacterInCover != nullptr;
 }
 
 

@@ -89,9 +89,9 @@ ACityGenerator::ACityGenerator()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	
-	MeshComponent = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("City Block Meshes"));
-	MeshComponent->SetupAttachment(RootComponent);
-	MeshComponent->SetStaticMesh(FloorMesh);
+	FloorMeshComponent = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("City Block Meshes"));
+	FloorMeshComponent->SetupAttachment(RootComponent);
+	FloorMeshComponent->SetStaticMesh(FloorMesh);
 }
 
 void ACityGenerator::Randomize()
@@ -106,9 +106,9 @@ void ACityGenerator::Randomize()
 	CreateMeshes();
 }
 
-void ACityGenerator::ClearCity()
+void ACityGenerator::ClearCity_Implementation()
 {
-	MeshComponent->ClearInstances();
+	FloorMeshComponent->ClearInstances();
 	
 	for(int i = 0; i < BuildingMeshesComponent.Num(); ++i)
 	{
@@ -203,14 +203,14 @@ void ACityGenerator::CreateMeshes()
 		relativeLocation.X += (BaseBlockSize * CityBlocks[i].BlockSize.X) / 2;
 		relativeLocation.Y += (BaseBlockSize * CityBlocks[i].BlockSize.Y) / 2;
 		
-		int MeshIndex = MeshComponent->AddInstance(FTransform(FRotator(), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
+		int MeshIndex = FloorMeshComponent->AddInstance(FTransform(FRotator(), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
 
 	}
 }
 
 void ACityGenerator::ShowCity()
 {
-	MeshComponent->SetVisibility(true);
+	FloorMeshComponent->SetVisibility(true);
 	for(int i = 0; i < BuildingMeshesComponent.Num(); ++i)
 	{
 		BuildingMeshesComponent[i]->SetVisibility(true);
@@ -219,7 +219,7 @@ void ACityGenerator::ShowCity()
 
 void ACityGenerator::HideCity()
 {
-	MeshComponent->SetVisibility(false);
+	FloorMeshComponent->SetVisibility(false);
 	for(int i = 0; i < BuildingMeshesComponent.Num(); ++i)
 	{
 		BuildingMeshesComponent[i]->SetVisibility(false);
@@ -240,21 +240,25 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	//Randomize();
-
-	MeshComponent->InstanceStartCullDistance = InstancedMeshComponentsStartCullDistance;
-	MeshComponent->InstanceEndCullDistance = InstancedMeshComponentsStartCullDistance;
+	UE_LOG(LogTemp, Log, TEXT("On construction called : %d => %d"), BuildingMeshes.Num(), BuildingMeshesComponent.Num());
+	FloorMeshComponent->InstanceStartCullDistance = InstancedMeshComponentsStartCullDistance;
+	FloorMeshComponent->InstanceEndCullDistance = InstancedMeshComponentsStartCullDistance;
+	FloorMeshComponent->SetStaticMesh(FloorMesh);
 	
 	for(int i = 0; i < BuildingMeshes.Num(); ++i)
 	{
-		if(BuildingMeshesComponent.Num() <= i)
+		if(BuildingMeshesComponent.Num() <= i || !IsValid(BuildingMeshesComponent[i]))
 		{
 			FString str = FString("Building Mesh Component " + i);
 			UInstancedStaticMeshComponent* NewComp = NewObject<UInstancedStaticMeshComponent>(this, UInstancedStaticMeshComponent::StaticClass(), FName(str));
 			
 			NewComp->SetupAttachment(RootComponent);
 			NewComp->RegisterComponent();
-			
-			BuildingMeshesComponent.Add(NewComp);
+			if(BuildingMeshesComponent.Num() <= i)
+				BuildingMeshesComponent.Add(NewComp);
+			else
+				BuildingMeshesComponent[i] = NewComp;
+			UE_LOG(LogTemp, Log, TEXT("Add new component : %d"), i);
 		}
 		
 		if(BuildingMeshesComponent[i]->GetStaticMesh() != BuildingMeshes[i])
@@ -317,7 +321,7 @@ void ACityGenerator::Tick(float DeltaTime)
  
 	FVector camLocation = viewLocations[0];
 
-	if(FVector::DistSquared(camLocation, GetCenterCityPoint()) >= DistanceCulling * DistanceCulling)
+	if(DistanceCulling > 0 && FVector::DistSquared(camLocation, GetCenterCityPoint()) >= DistanceCulling * DistanceCulling)
 	{
 		if(!bIsDistanceCulled)
 		{

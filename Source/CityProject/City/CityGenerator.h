@@ -41,15 +41,15 @@ public:
 	// Sets default values for this actor's properties
 	ACityGenerator();
 
-	UPROPERTY(EditAnywhere, Category="City setup")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup")
 	FVector2D CitySize = FVector2D(5,5);
 
 	TArray<CityBlock> CityBlocks;
 
 	UPROPERTY(VisibleInstanceOnly, Category="City setup")
-	UInstancedStaticMeshComponent* MeshComponent = nullptr;
+	UInstancedStaticMeshComponent* FloorMeshComponent = nullptr;
 
-	UPROPERTY(VisibleInstanceOnly, Category="City setup")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="City setup")
 	TArray<UInstancedStaticMeshComponent*> BuildingMeshesComponent;
 
 	UPROPERTY(VisibleInstanceOnly, Category="City setup|Optimisation")
@@ -64,25 +64,25 @@ public:
 	UPROPERTY(EditAnywhere, Category="City setup|Optimisation")
 	float InstancedMeshComponentsEndCullDistance = 4500;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Building")
 	TArray<FVector> BuildingOffsets;
 	
-	UPROPERTY(EditAnywhere, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Building")
 	TArray<FVector> BuildingScales;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Building")
 	TArray<FRotator> BuildingRotations;
 
 	UPROPERTY(EditAnywhere, Category="City setup|Building")
 	int BuildingMaxBlockOccupation = 2;
 	
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="City setup|Building")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="City setup|Building")
 	TArray<UStaticMesh*> BuildingMeshes;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Block")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Block")
 	TArray<UMaterialInterface*> FloorMaterials;
 
-	UPROPERTY(EditAnywhere, AdvancedDisplay, Category="City setup|Block")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, AdvancedDisplay, Category="City setup|Block")
 	float BaseBlockSize = 50;
 
 	UPROPERTY(EditAnywhere, Category="City setup|Block")
@@ -97,6 +97,7 @@ public:
 	UFUNCTION(CallInEditor, BlueprintCallable, Category="City setup")
 	void Randomize();
 
+	UFUNCTION(BlueprintNativeEvent, Category="City setup")
 	void ClearCity();
 
 	void GenerateBlocks();

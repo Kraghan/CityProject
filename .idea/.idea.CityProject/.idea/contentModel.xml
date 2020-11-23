@@ -43447,6 +43447,10 @@
           <e p="CityProject.h" t="Include" />
           <e p="CityProjectGameModeBase.cpp" t="Include" />
           <e p="CityProjectGameModeBase.h" t="Include" />
+          <e p="Enemy" t="Include">
+            <e p="CoverPointComponent.cpp" t="Include" />
+            <e p="CoverPointComponent.h" t="Include" />
+          </e>
         </e>
         <e p="CityProject.Target.cs" t="Include" />
         <e p="CityProjectEditor.Target.cs" t="Include" />
