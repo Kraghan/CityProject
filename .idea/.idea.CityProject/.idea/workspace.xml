@@ -5,20 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05103f26-338c-44e0-87b4-557ed8ff4898" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Child_Indus.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Child_Indus.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Indus1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Indus1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Wealth.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Wealth.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_skyscrapper.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_skyscrapper.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +161,8 @@
       <workItem from="1605998836036" duration="5451000" />
       <workItem from="1606055775702" duration="526000" />
       <workItem from="1606056388835" duration="9334000" />
-      <workItem from="1606162831671" duration="6951000" />
+      <workItem from="1606162831671" duration="7546000" />
+      <workItem from="1606252161365" duration="5251000" />
     </task>
     <servers />
   </component>

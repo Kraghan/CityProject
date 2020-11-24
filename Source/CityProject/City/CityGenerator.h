@@ -13,12 +13,14 @@ class CITYPROJECT_API ACityGenerator : public AActor
 
 	struct CityBuilding
 	{
-		int RotationIndex = 0;
-		int ScaleIndex = 0;
-		int MeshIndex = 0;
+		CityBuilding(int x, int y);
 
-		TArray<int> HoloRooftopMaterialsIndex;
-		TArray<int> HoloWallMaterialsIndex;
+		FVector2D Location;
+		int Size = 1;
+		int OffsetIndex = -1;
+		int RotationIndex = -1;
+		int ScaleIndex = -1;
+		int MeshIndex = 0;
 	};
 
 	struct CityBlock
@@ -35,6 +37,8 @@ class CITYPROJECT_API ACityGenerator : public AActor
 
 		UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* FloorComponentRef;
+
+		void CreateMeshes(ACityGenerator* City);
 	};
 	
 public:	
@@ -55,40 +59,40 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Category="City setup|Optimisation")
 	bool bIsDistanceCulled = false;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Optimisation")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Optimisation")
 	float DistanceCulling = 9000;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Optimisation")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Optimisation")
 	float InstancedMeshComponentsStartCullDistance = 4000;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Optimisation")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Optimisation")
 	float InstancedMeshComponentsEndCullDistance = 4500;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Building")
 	TArray<FVector> BuildingOffsets;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Building")
 	TArray<FVector> BuildingScales;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Building")
 	TArray<FRotator> BuildingRotations;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category="City setup|Building")
 	int BuildingMaxBlockOccupation = 2;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="City setup|Building")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Building")
 	TArray<UStaticMesh*> BuildingMeshes;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="City setup|Block")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Block")
 	TArray<UMaterialInterface*> FloorMaterials;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, AdvancedDisplay, Category="City setup|Block")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, AdvancedDisplay, Category="City setup|Block")
 	float BaseBlockSize = 50;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Block")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Block")
 	bool KeepSquaredBlock = true;
 
-	UPROPERTY(EditAnywhere, Category="City setup|Block", meta = (ToolTip = "In block unit") )
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Block", meta = (ToolTip = "In block unit") )
 	int MaxBlockSize = 1;
 
 	UPROPERTY(EditAnywhere, Category="City setup|Block")
@@ -102,6 +106,7 @@ public:
 
 	void GenerateBlocks();
 
+	UFUNCTION(BlueprintNativeEvent, Category="City setup")
 	void CreateMeshes();
 
 	int GetNumberOfBlocksMax() const
@@ -121,7 +126,7 @@ public:
 	void CityToggleEditorCulling();
 
 	UFUNCTION(BlueprintImplementableEvent, Category="City setup")
-	void OnPostBuildingCreated(int MeshTypeIndex, int MeshInstanceIndex);
+	void OnPostBuildingCreated(int MeshTypeIndex);
 	
 protected:
 	virtual void OnConstruction(const FTransform& Transform) override;

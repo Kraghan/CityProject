@@ -3,6 +3,11 @@
 
 #include "CityGenerator.h"
 
+ACityGenerator::CityBuilding::CityBuilding(int x, int y)
+	: Location(FVector2D(x,y))
+{
+}
+
 ACityGenerator::CityBlock::CityBlock()
 	:CityBlock(FVector2D(1,1), FVector2D(), nullptr)
 {
@@ -35,49 +40,93 @@ ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocatio
 			{
 				continue;
 			}
-			
-			// Calculate building location
-			FVector2D blockCoordinates = BlockLocation + FVector2D(x,y);
-			FVector location = FVector(blockCoordinates.X * City->BaseBlockSize, blockCoordinates.Y * City->BaseBlockSize, 0);
-			
+			CityBuilding newBuilding = CityBuilding(x,y);
+
+			// Location
 			if(City->BuildingOffsets.Num() != 0)
-			{
-				location += City->BuildingOffsets[FMath::RandRange(0, City->BuildingOffsets.Num() - 1)];	
+			{				
+				newBuilding.OffsetIndex = FMath::RandRange(0, City->BuildingOffsets.Num() - 1);
 			}
 
-			// Calculate building rotation
-			FRotator rotation = City->BuildingRotations[FMath::RandRange(0, City->BuildingRotations.Num() - 1)];
+			// Rotation
+			if(City->BuildingRotations.Num() != 0)
+			{				
+				newBuilding.RotationIndex = FMath::RandRange(0, City->BuildingRotations.Num() - 1);
+            }
 
-			// Calculate building scale
-			FVector scale = City->BuildingScales[FMath::RandRange(0, City->BuildingScales.Num() - 1)];
-			int scaleFactor = 1;
+			// Scales
+			if(City->BuildingScales.Num() != 0)
+			{				
+				newBuilding.ScaleIndex = FMath::RandRange(0, City->BuildingScales.Num() - 1);
+            }
 			if(x <= BlockSize.X - City->BuildingMaxBlockOccupation && y <= BlockSize.Y - City->BuildingMaxBlockOccupation)
 			{
-				scaleFactor = FMath::RandRange(1, City->BuildingMaxBlockOccupation);
+				newBuilding.Size = FMath::RandRange(1, City->BuildingMaxBlockOccupation);
 			}
-			
-			location += FVector(City->BaseBlockSize,City->BaseBlockSize,0) * scaleFactor / 2;
-			scale *= scaleFactor;
 
-			// Add mesh
-			int meshIndex = FMath::RandRange(0,City->BuildingMeshes.Num() - 1);
+			// Mesh
+			if(City->BuildingMeshes.Num() != 0)
+			{				
+				newBuilding.MeshIndex = FMath::RandRange(0, City->BuildingMeshes.Num() - 1);
+            }
+
+			Buildings.Add(newBuilding);
 			
-			FTransform Transform = FTransform(rotation, location, scale);
-			int meshInstanceIndex = City->BuildingMeshesComponent[meshIndex]->AddInstance(Transform);
+			// Add Holograms
+			City->OnPostBuildingCreated(newBuilding.MeshIndex);
 
 			// Fill occupation representation
-			for(int i = 0; i < scaleFactor; ++i)
+			for(int i = 0; i < newBuilding.Size; ++i)
 			{
-				for(int j = 0; j < scaleFactor; ++j)
+				for(int j = 0; j < newBuilding.Size; ++j)
 				{
 					CityBlockRepresentation[x + i][y + j] = true;
 				}
 			}
-
-			// Add Holograms
-			City->OnPostBuildingCreated(meshIndex, meshInstanceIndex);
 		}	
 	}
+}
+
+void ACityGenerator::CityBlock::CreateMeshes(ACityGenerator* City)
+{
+	for(int i = 0; i < Buildings.Num(); ++i)
+	{
+		CityBuilding& building = Buildings[i];
+		
+		// Calculate building location
+		FVector2D blockCoordinates = BlockLocation + building.Location;
+		FVector location = FVector(blockCoordinates.X * City->BaseBlockSize, blockCoordinates.Y * City->BaseBlockSize, 0);
+			
+		if(building.OffsetIndex != -1)
+		{
+			location += City->BuildingOffsets[building.OffsetIndex];	
+		}
+
+		// Calculate building rotation
+		FRotator rotation = FRotator::ZeroRotator;
+		if(building.RotationIndex != -1)
+		{
+			rotation = City->BuildingRotations[building.RotationIndex];
+		}
+			
+		// Calculate building scale
+		FVector scale = FVector::OneVector;
+		if(building.ScaleIndex != -1)
+		{
+			scale = City->BuildingScales[building.ScaleIndex];
+		}
+		int scaleFactor = building.Size;
+
+		scale *= scaleFactor;
+		location += FVector(City->BaseBlockSize,City->BaseBlockSize,0) * scaleFactor / 2;			
+
+		// Add mesh
+		int meshIndex = building.MeshIndex;
+			
+		FTransform Transform = FTransform(rotation, location, scale);
+		int meshInstanceIndex = City->BuildingMeshesComponent[meshIndex]->AddInstance(Transform);
+	}
+	
 }
 
 // Sets default values
@@ -99,9 +148,11 @@ void ACityGenerator::Randomize()
 	// Destroy previous datas
 	ClearCity();
 
+	UE_LOG(LogTemp, Log, TEXT("Blocks before : %d"), CityBlocks.Num());
 	// Generate city blocks
 	GenerateBlocks();
-
+	UE_LOG(LogTemp, Log, TEXT("Blocks after : %d"), CityBlocks.Num());
+	
 	// Create Meshes
 	CreateMeshes();
 }
@@ -192,7 +243,7 @@ void ACityGenerator::GenerateBlocks()
 	}
 }
 
-void ACityGenerator::CreateMeshes()
+void ACityGenerator::CreateMeshes_Implementation()
 {
 	for(int i = 0; i < CityBlocks.Num(); ++i)
 	{
@@ -203,8 +254,9 @@ void ACityGenerator::CreateMeshes()
 		relativeLocation.X += (BaseBlockSize * CityBlocks[i].BlockSize.X) / 2;
 		relativeLocation.Y += (BaseBlockSize * CityBlocks[i].BlockSize.Y) / 2;
 		
-		int MeshIndex = FloorMeshComponent->AddInstance(FTransform(FRotator(), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
+		FloorMeshComponent->AddInstance(FTransform(FRotator(), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
 
+		CityBlocks[i].CreateMeshes(this);
 	}
 }
 
@@ -240,7 +292,7 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	//Randomize();
-	UE_LOG(LogTemp, Log, TEXT("On construction called : %d => %d"), BuildingMeshes.Num(), BuildingMeshesComponent.Num());
+	
 	FloorMeshComponent->InstanceStartCullDistance = InstancedMeshComponentsStartCullDistance;
 	FloorMeshComponent->InstanceEndCullDistance = InstancedMeshComponentsStartCullDistance;
 	FloorMeshComponent->SetStaticMesh(FloorMesh);
@@ -258,7 +310,6 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 				BuildingMeshesComponent.Add(NewComp);
 			else
 				BuildingMeshesComponent[i] = NewComp;
-			UE_LOG(LogTemp, Log, TEXT("Add new component : %d"), i);
 		}
 		
 		if(BuildingMeshesComponent[i]->GetStaticMesh() != BuildingMeshes[i])
