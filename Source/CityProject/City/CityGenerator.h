@@ -6,22 +6,39 @@
 #include "GameFramework/Actor.h"
 #include "CityGenerator.generated.h"
 
+USTRUCT(BlueprintType)
+struct FCityBuilding
+{
+	GENERATED_BODY()
+	FCityBuilding();
+	FCityBuilding(int x, int y);
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector2D Location;
+	
+	UPROPERTY(BlueprintReadWrite)
+	int Size = 1;
+
+	UPROPERTY(BlueprintReadWrite)
+	int OffsetIndex = -1;
+
+	UPROPERTY(BlueprintReadWrite)
+	int RotationIndex = -1;
+
+	UPROPERTY(BlueprintReadWrite)
+	int ScaleIndex = -1;
+
+	UPROPERTY(BlueprintReadWrite)
+	int MeshIndex = 0;
+
+	UPROPERTY(BlueprintReadWrite)
+	int MeshInstanceID = -1;
+};
+
 UCLASS(Blueprintable)
 class CITYPROJECT_API ACityGenerator : public AActor
 {
 	GENERATED_BODY()
-
-	struct CityBuilding
-	{
-		CityBuilding(int x, int y);
-
-		FVector2D Location;
-		int Size = 1;
-		int OffsetIndex = -1;
-		int RotationIndex = -1;
-		int ScaleIndex = -1;
-		int MeshIndex = 0;
-	};
 
 	struct CityBlock
 	{
@@ -33,10 +50,7 @@ class CITYPROJECT_API ACityGenerator : public AActor
 		FVector2D BlockLocation;
 		int FloorMaterialIndex = 0;
 
-		TArray<CityBuilding> Buildings;
-
-		UPROPERTY(VisibleAnywhere)
-		UStaticMeshComponent* FloorComponentRef;
+		TArray<FCityBuilding> Buildings;
 
 		void CreateMeshes(ACityGenerator* City);
 	};
@@ -55,6 +69,9 @@ public:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="City setup")
 	TArray<UInstancedStaticMeshComponent*> BuildingMeshesComponent;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="City setup")
+	TArray<int> NumberOfBuildingInstancePerBuildingType;
 
 	UPROPERTY(VisibleInstanceOnly, Category="City setup|Optimisation")
 	bool bIsDistanceCulled = false;
@@ -126,7 +143,7 @@ public:
 	void CityToggleEditorCulling();
 
 	UFUNCTION(BlueprintImplementableEvent, Category="City setup")
-	void OnPostBuildingCreated(int MeshTypeIndex);
+	void OnPostBuildingCreated(UPARAM(ref) FCityBuilding& BuildingRef);
 	
 protected:
 	virtual void OnConstruction(const FTransform& Transform) override;

@@ -3,7 +3,12 @@
 
 #include "CityGenerator.h"
 
-ACityGenerator::CityBuilding::CityBuilding(int x, int y)
+FCityBuilding::FCityBuilding()
+	: FCityBuilding(0,0)
+{
+}
+
+FCityBuilding::FCityBuilding(int x, int y)
 	: Location(FVector2D(x,y))
 {
 }
@@ -16,7 +21,6 @@ ACityGenerator::CityBlock::CityBlock()
 ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocation, ACityGenerator* City)
 	: BlockSize(BlockSize)
 	, BlockLocation(BlockLocation)
-	, FloorComponentRef(nullptr)
 {
 	if(City == nullptr)
 	{
@@ -40,7 +44,7 @@ ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocatio
 			{
 				continue;
 			}
-			CityBuilding newBuilding = CityBuilding(x,y);
+			FCityBuilding newBuilding = FCityBuilding(x,y);
 
 			// Location
 			if(City->BuildingOffsets.Num() != 0)
@@ -68,12 +72,14 @@ ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocatio
 			if(City->BuildingMeshes.Num() != 0)
 			{				
 				newBuilding.MeshIndex = FMath::RandRange(0, City->BuildingMeshes.Num() - 1);
+				newBuilding.MeshInstanceID = City->NumberOfBuildingInstancePerBuildingType[newBuilding.MeshIndex];
+				City->NumberOfBuildingInstancePerBuildingType[newBuilding.MeshIndex] ++;
             }
-
-			Buildings.Add(newBuilding);
 			
 			// Add Holograms
-			City->OnPostBuildingCreated(newBuilding.MeshIndex);
+			City->OnPostBuildingCreated(newBuilding);
+
+			Buildings.Add(newBuilding);
 
 			// Fill occupation representation
 			for(int i = 0; i < newBuilding.Size; ++i)
@@ -91,7 +97,7 @@ void ACityGenerator::CityBlock::CreateMeshes(ACityGenerator* City)
 {
 	for(int i = 0; i < Buildings.Num(); ++i)
 	{
-		CityBuilding& building = Buildings[i];
+		FCityBuilding& building = Buildings[i];
 		
 		// Calculate building location
 		FVector2D blockCoordinates = BlockLocation + building.Location;
@@ -148,10 +154,8 @@ void ACityGenerator::Randomize()
 	// Destroy previous datas
 	ClearCity();
 
-	UE_LOG(LogTemp, Log, TEXT("Blocks before : %d"), CityBlocks.Num());
 	// Generate city blocks
 	GenerateBlocks();
-	UE_LOG(LogTemp, Log, TEXT("Blocks after : %d"), CityBlocks.Num());
 	
 	// Create Meshes
 	CreateMeshes();
@@ -167,6 +171,18 @@ void ACityGenerator::ClearCity_Implementation()
 	}
 
 	CityBlocks.Empty();
+
+	for(int i = 0 ; i < BuildingMeshes.Num(); ++i)
+	{
+		if(NumberOfBuildingInstancePerBuildingType.Num() <= i)
+		{
+			NumberOfBuildingInstancePerBuildingType.Add(0);
+		}
+		else
+		{
+			NumberOfBuildingInstancePerBuildingType[i] = 0;
+		}
+	}
 }
 
 void ACityGenerator::GenerateBlocks()
@@ -335,7 +351,7 @@ void ACityGenerator::BeginPlay()
 	
 	if(CityBlocks.Num() == 0)
 	{
-		Randomize();
+		//Randomize();
 	}
 }
 
