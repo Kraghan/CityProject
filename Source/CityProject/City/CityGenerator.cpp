@@ -35,12 +35,14 @@ ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocatio
 		CityBlockRepresentation[i].AddDefaulted(BlockSize.Y);
 	}
 
+	int BuildingMaxSize = City->GetMaxBuildingSize();
+	
 	for(int x = 0; x < BlockSize.X; ++x)
 	{
 		for(int y = 0; y < BlockSize.Y; ++y)
 		{
-			// Skip if occupied
-			if(CityBlockRepresentation[x][y])
+			// Skip if occupied or if empty lot
+			if(CityBlockRepresentation[x][y] || FMath::RandRange(0.f, 1.f) <= City->EmptyLotPercentile)
 			{
 				continue;
 			}
@@ -63,17 +65,45 @@ ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocatio
 			{				
 				newBuilding.ScaleIndex = FMath::RandRange(0, City->BuildingScales.Num() - 1);
             }
-			if(x <= BlockSize.X - City->BuildingMaxBlockOccupation && y <= BlockSize.Y - City->BuildingMaxBlockOccupation)
+			int maxSize = BuildingMaxSize;
+
+			for(int i = 0; i < maxSize; ++i)
 			{
-				newBuilding.Size = FMath::RandRange(1, City->BuildingMaxBlockOccupation);
+				if(x + i >= BlockSize.X - 1)
+				{
+					maxSize = i;
+				}
+				for(int j = 0; j < maxSize; ++j)
+				{
+					if(y + j >= BlockSize.Y - 1 || CityBlockRepresentation[x + i][y + j])
+					{
+						maxSize = j;
+						break;
+					}
+				}	
 			}
+
+			newBuilding.Size = City->GetBuildingSizeWithProba(maxSize);
 
 			// Mesh
 			if(City->BuildingMeshes.Num() != 0)
-			{				
-				newBuilding.MeshIndex = FMath::RandRange(0, City->BuildingMeshes.Num() - 1);
-				newBuilding.MeshInstanceID = City->NumberOfBuildingInstancePerBuildingType[newBuilding.MeshIndex];
-				City->NumberOfBuildingInstancePerBuildingType[newBuilding.MeshIndex] ++;
+			{
+				TArray<int> buildingIndexes;
+				City->GetFittingBuildingsIndexes(buildingIndexes, newBuilding.Size);
+				if(buildingIndexes.Num() != 0)
+				{
+					
+					int randIndex = FMath::RandRange(0, buildingIndexes.Num() - 1);
+					newBuilding.MeshIndex = buildingIndexes[randIndex];
+					newBuilding.MeshInstanceID = City->NumberOfBuildingInstancePerBuildingType[newBuilding.MeshIndex];
+					City->NumberOfBuildingInstancePerBuildingType[newBuilding.MeshIndex] ++;
+				}
+				else
+				{
+					newBuilding.MeshIndex = -1;
+					UE_LOG(LogActor, Warning, TEXT("No building found for a size of %d"), newBuilding.Size);
+					continue;
+				}
             }
 			
 			// Add Holograms
@@ -98,6 +128,14 @@ void ACityGenerator::CityBlock::CreateMeshes(ACityGenerator* City)
 	for(int i = 0; i < Buildings.Num(); ++i)
 	{
 		FCityBuilding& building = Buildings[i];
+
+		// Add mesh
+		int meshIndex = building.MeshIndex;
+
+		if(meshIndex == -1)
+		{
+			continue;
+		}
 		
 		// Calculate building location
 		FVector2D blockCoordinates = BlockLocation + building.Location;
@@ -126,9 +164,6 @@ void ACityGenerator::CityBlock::CreateMeshes(ACityGenerator* City)
 		scale *= scaleFactor;
 		location += FVector(City->BaseBlockSize,City->BaseBlockSize,0) * scaleFactor / 2;			
 
-		// Add mesh
-		int meshIndex = building.MeshIndex;
-			
 		FTransform Transform = FTransform(rotation, location, scale);
 		int meshInstanceIndex = City->BuildingMeshesComponent[meshIndex]->AddInstance(Transform);
 	}
@@ -195,65 +230,45 @@ void ACityGenerator::GenerateBlocks()
 		CityBlockRepresentation[i].AddDefaulted(CitySize.Y);
 	}
 
-	// Place different size of block
-	for(int sizeX = MaxBlockSize; sizeX > 0; --sizeX)
-	{
-		int sizeY = KeepSquaredBlock ? sizeX : FMath::RandRange(1, MaxBlockSize);
-
-		int maxNumberPlaceable = CitySize.X / sizeX * CitySize.Y / sizeY;
-		
-		int numberToGenerate = FMath::RandRange(0, maxNumberPlaceable);
-
-		for(int i = 0; i < numberToGenerate; ++i)
-		{
-			// Find random location
-			FVector2D blockLocation = FVector2D(FMath::RandRange(0, static_cast<int>(CitySize.X) - sizeX),
-				FMath::RandRange(0, static_cast<int>(CitySize.Y) - sizeY));
-
-			// Check if this space is free or not
-			bool spaceIsFree = true;
-			for(int x = 0; x < sizeX; ++x)
-			{
-				for(int y = 0; y < sizeY; ++y)
-				{
-					if(CityBlockRepresentation[blockLocation.X + x][blockLocation.Y + y])
-					{
-						spaceIsFree = false;
-						break;
-					}
-				}
-				
-				if(!spaceIsFree)
-				{
-					break;
-				}
-			}
-
-			// If space is free, create block here
-			if(spaceIsFree)
-			{
-				CityBlocks.Add(CityBlock(FVector2D(sizeX, sizeY), blockLocation, this));
-
-				// Update representation
-				for(int x = 0; x < sizeX; ++x)
-				{
-					for(int y = 0; y < sizeY; ++y)
-					{
-						CityBlockRepresentation[blockLocation.X + x][blockLocation.Y + y] = true;
-					}	
-				}
-			}
-		}
-	}
-
-	// Fill remaining empty block
+	int BlockMaxSize = GetMaxBlockSize();
+	
 	for(int x = 0; x < CitySize.X; ++x)
 	{
 		for(int y = 0; y < CitySize.Y; ++y)
 		{
-			if(!CityBlockRepresentation[x][y])
+			if(CityBlockRepresentation[x][y])
 			{
-				CityBlocks.Add(CityBlock(FVector2D(1, 1), FVector2D(x,y), this));
+				continue;
+			}
+
+			int maxSize = BlockMaxSize;
+
+			for(int i = 0; i < maxSize; ++i)
+			{
+				if(x + i >= CitySize.X - 1)
+				{
+					maxSize = i;
+				}
+				for(int j = 0; j < maxSize; ++j)
+				{
+					if(y + j >= CitySize.Y - 1 || CityBlockRepresentation[x + i][y + j])
+					{
+						maxSize = j;
+						break;
+					}
+				}	
+			}
+			
+			int blockSize = GetBlockSizeWithProba(maxSize);
+			CityBlocks.Add(CityBlock(FVector2D(blockSize, blockSize), FVector2D(x,y), this));
+
+			// Update representation
+			for(int i = 0; i < blockSize; ++i)
+			{
+				for(int j = 0; j < blockSize; ++j)
+				{
+					CityBlockRepresentation[x + i][y + j] = true;
+				}	
 			}
 		}		
 	}
@@ -270,7 +285,7 @@ void ACityGenerator::CreateMeshes_Implementation()
 		relativeLocation.X += (BaseBlockSize * CityBlocks[i].BlockSize.X) / 2;
 		relativeLocation.Y += (BaseBlockSize * CityBlocks[i].BlockSize.Y) / 2;
 		
-		FloorMeshComponent->AddInstance(FTransform(FRotator(), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
+		FloorMeshComponent->AddInstance(FTransform(FRotator(0,0,0), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
 
 		CityBlocks[i].CreateMeshes(this);
 	}
@@ -304,6 +319,114 @@ void ACityGenerator::CityToggleEditorCulling()
 	CullInEditor = !CullInEditor;
 }
 
+int ACityGenerator::GetBuildingSizeWithProba(int MaxSize)
+{
+	TMap<float, int> weightedWheel;
+	TArray<int> BuildingSizes;
+
+	BuildingSizeProbabilities.GetKeys(BuildingSizes);
+
+	float currentProba = 0;
+	for(int i = 0; i < BuildingSizes.Num(); ++i)
+	{
+		if(BuildingSizes[i] <= MaxSize)
+		{
+			currentProba += BuildingSizeProbabilities[BuildingSizes[i]];
+			weightedWheel.Add(currentProba, BuildingSizes[i]);
+		}
+	}
+	
+	float value = FMath::RandRange(0.f, currentProba);
+	TArray<float> probas;
+	weightedWheel.GetKeys(probas);
+	
+	for(int i = 0; i < probas.Num(); ++i)
+	{
+		if(value <= probas[i])
+		{
+			return weightedWheel[probas[i]];
+		}
+	}
+
+	return 1;
+}
+
+int ACityGenerator::GetMaxBuildingSize()
+{
+	TArray<int> BuildingSizes;
+	BuildingSizeProbabilities.GetKeys(BuildingSizes);
+
+	int maxSize = 1;
+	for(int i = 0; i < BuildingSizes.Num(); ++i)
+	{
+		if(BuildingSizes[i] > maxSize)
+		{
+			maxSize = BuildingSizes[i];
+		}
+	}
+	return maxSize;
+}
+
+int ACityGenerator::GetBlockSizeWithProba(int MaxSize)
+{
+	TMap<float, int> weightedWheel;
+	TArray<int> BlockSizes;
+
+	BlockSizeProbability.GetKeys(BlockSizes);
+
+	float currentProba = 0;
+	for(int i = 0; i < BlockSizes.Num(); ++i)
+	{
+		if(BlockSizes[i] <= MaxSize)
+		{
+			currentProba += BlockSizeProbability[BlockSizes[i]];
+			weightedWheel.Add(currentProba, BlockSizes[i]);
+		}
+	}
+	
+	float value = FMath::RandRange(0.f, currentProba);
+	TArray<float> probas;
+	weightedWheel.GetKeys(probas);
+	
+	for(int i = 0; i < probas.Num(); ++i)
+	{
+		if(value <= probas[i])
+		{
+			return weightedWheel[probas[i]];
+		}
+	}
+
+	return 1;
+}
+
+int ACityGenerator::GetMaxBlockSize()
+{
+	TArray<int> BlockSizes;
+	BlockSizeProbability.GetKeys(BlockSizes);
+
+	int maxSize = 1;
+	for(int i = 0; i < BlockSizes.Num(); ++i)
+	{
+		if(BlockSizes[i] > maxSize)
+		{
+			maxSize = BlockSizes[i];
+		}
+	}
+	return maxSize;
+}
+
+void ACityGenerator::GetFittingBuildingsIndexes(TArray<int>& BuildingIndexes, int MaxSize)
+{
+	for(int i = 0; i < BuildingMeshes.Num(); ++i)
+	{
+		if(BuildingMeshes[i].AvailableForEverySize
+			|| (BuildingMeshes[i].MaxSize >= MaxSize && BuildingMeshes[i].MinSize <= MaxSize))
+		{
+			BuildingIndexes.Add(i);
+		}
+	}
+}
+
 void ACityGenerator::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
@@ -328,9 +451,9 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 				BuildingMeshesComponent[i] = NewComp;
 		}
 		
-		if(BuildingMeshesComponent[i]->GetStaticMesh() != BuildingMeshes[i])
+		if(BuildingMeshesComponent[i]->GetStaticMesh() != BuildingMeshes[i].Mesh)
 		{
-			BuildingMeshesComponent[i]->SetStaticMesh(BuildingMeshes[i]);	
+			BuildingMeshesComponent[i]->SetStaticMesh(BuildingMeshes[i].Mesh);	
 		}
 
 		BuildingMeshesComponent[i]->InstanceStartCullDistance = InstancedMeshComponentsStartCullDistance;

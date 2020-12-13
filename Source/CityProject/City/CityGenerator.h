@@ -35,6 +35,24 @@ struct FCityBuilding
 	int MeshInstanceID = -1;
 };
 
+USTRUCT(BlueprintType)
+struct FMeshData
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMesh* Mesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool AvailableForEverySize = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(EditCondition="!AvailableForEverySize"))
+	int MinSize = 1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(EditCondition="!AvailableForEverySize"))
+	int MaxSize = 1;
+};
+
 UCLASS(Blueprintable)
 class CITYPROJECT_API ACityGenerator : public AActor
 {
@@ -95,10 +113,10 @@ public:
 	TArray<FRotator> BuildingRotations;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category="City setup|Building")
-	int BuildingMaxBlockOccupation = 2;
+	TMap<int, float> BuildingSizeProbabilities;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Building")
-	TArray<UStaticMesh*> BuildingMeshes;
+	TArray<FMeshData> BuildingMeshes;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Block")
 	TArray<UMaterialInterface*> FloorMaterials;
@@ -106,11 +124,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, AdvancedDisplay, Category="City setup|Block")
 	float BaseBlockSize = 50;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Block")
-	bool KeepSquaredBlock = true;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="City setup|Block", meta = (ToolTip = "In block unit") )
-	int MaxBlockSize = 1;
+	TMap<int, float> BlockSizeProbability;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "City setup|Block")
+	float EmptyLotPercentile = 0.02f;
 
 	UPROPERTY(EditAnywhere, Category="City setup|Block")
 	UStaticMesh* FloorMesh = nullptr;
@@ -144,6 +162,21 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category="City setup")
 	void OnPostBuildingCreated(UPARAM(ref) FCityBuilding& BuildingRef);
+
+	UFUNCTION(BlueprintCallable, Category="City setup|Building")
+	int GetBuildingSizeWithProba(int MaxSize);
+
+	UFUNCTION(BlueprintCallable, Category="City setup|Building")
+	int GetMaxBuildingSize();
+
+	UFUNCTION(BlueprintCallable, Category="City setup|Block")
+    int GetBlockSizeWithProba(int MaxSize);
+
+	UFUNCTION(BlueprintCallable, Category="City setup|Block")
+    int GetMaxBlockSize();
+
+	UFUNCTION(BlueprintCallable, Category="City setup|Building")
+	void GetFittingBuildingsIndexes(TArray<int>& BuildingIndexes, int MaxSize);
 	
 protected:
 	virtual void OnConstruction(const FTransform& Transform) override;
