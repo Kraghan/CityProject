@@ -6,16 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05103f26-338c-44e0-87b4-557ed8ff4898" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Child_Indus.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Child_Indus.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Indus1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Indus1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Wealth.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_Wealth.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_skyscrapper.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_skyscrapper.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/HoloData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/HoloData.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CityProject.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/CityProject.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,10 +22,25 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Private/UObject/Obj.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Editor/DetailCustomizations/Private/ComponentTransformDetails.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Actor.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Blueprint.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Private/UObject/PropertyAccessUtil.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/SceneManagement.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Public/EngineLogs.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectGlobals.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/BillboardComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Editor/PropertyEditor/Private/PropertyNode.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Public/SceneManagement.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/ActorComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/SceneComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/BillboardComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -37,9 +48,19 @@
       <option value="$PROJECT_DIR$/Source/CityProject/City/LockableBillboardComponent.cpp" />
       <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" />
       <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStepProperties.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStep.cpp" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStep.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionComponent.cpp" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStack.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionComponent.h" />
+      <option value="$PROJECT_DIR$/CityProject.uproject" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1kZ4l2RuPBIQsiYqYyetqL0qU9M" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -287,6 +308,10 @@
       <workItem from="1607371545009" duration="5982000" />
       <workItem from="1607862402522" duration="2369000" />
       <workItem from="1607865471496" duration="14394000" />
+      <workItem from="1610790371352" duration="12883000" />
+      <workItem from="1614113885854" duration="768000" />
+      <workItem from="1614195508466" duration="1844000" />
+      <workItem from="1614284150624" duration="972000" />
     </task>
     <servers />
   </component>
@@ -295,6 +320,18 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
