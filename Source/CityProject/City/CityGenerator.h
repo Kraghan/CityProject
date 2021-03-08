@@ -82,8 +82,8 @@ public:
 
 	TArray<CityBlock> CityBlocks;
 
-	UPROPERTY(VisibleInstanceOnly, Category="City setup")
-	UInstancedStaticMeshComponent* FloorMeshComponent = nullptr;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="City setup")
+	TArray<UInstancedStaticMeshComponent*> FloorMeshesComponent;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="City setup")
 	TArray<UInstancedStaticMeshComponent*> BuildingMeshesComponent;

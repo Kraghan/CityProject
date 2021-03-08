@@ -6,12 +6,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05103f26-338c-44e0-87b4-557ed8ff4898" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/CityProject/Interior/InteriorGenerator.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CityProject/Interior/InteriorGenerator.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CityProject/Interior/InteriorGeneratorBaseVolume.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CityProject/Interior/InteriorGeneratorBaseVolume.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CityProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CityProject.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/CityProject.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CityProject/Enemy/CoverPointComponent.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_skyscrapper.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TinyWorld/BP/BP_building_randomizer_skyscrapper.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/City/LockableBillboardComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/City/LockableBillboardComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/CityProject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/CityProject.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CityProject/CityProject.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CityProject/CityProject.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,32 +30,31 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Private/UObject/Obj.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/BillboardComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Editor/DetailCustomizations/Private/ComponentTransformDetails.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectGlobals.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Public/SceneManagement.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/Engine/Classes/Components/HierarchicalInstancedStaticMeshComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/BillboardComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Actor.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/SceneManagement.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Editor/PropertyEditor/Private/PropertyNode.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Blueprint.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Private/UObject/PropertyAccessUtil.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/SceneManagement.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Public/EngineLogs.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectGlobals.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/BillboardComponent.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Editor/PropertyEditor/Private/PropertyNode.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Public/SceneManagement.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/ActorComponent.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Private/Components/SceneComponent.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/BillboardComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Epic Games/UE_4.25/Engine/Source/Runtime/CoreUObject/Private/UObject/Obj.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Source/CityProject/City/LockableBillboardComponent.h" />
-      <option value="$PROJECT_DIR$/Source/CityProject/City/LockableBillboardComponent.cpp" />
-      <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" />
-      <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" />
       <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStepProperties.h" />
       <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStep.cpp" />
       <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStep.h" />
@@ -55,6 +62,13 @@
       <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionStack.h" />
       <option value="$PROJECT_DIR$/Source/CityProject/Interaction/InteractionComponent.h" />
       <option value="$PROJECT_DIR$/CityProject.uproject" />
+      <option value="$PROJECT_DIR$/Source/CityProject/CityProject.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/CityProject.cpp" />
+      <option value="$PROJECT_DIR$/Source/CityProject/City/LockableBillboardComponent.cpp" />
+      <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/City/CityGenerator.cpp" />
+      <option value="$PROJECT_DIR$/Source/CityProject/InteriorGenerator.h" />
+      <option value="$PROJECT_DIR$/Source/CityProject/Interior/InteriorGeneratorBaseVolume.h" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1kZ4l2RuPBIQsiYqYyetqL0qU9M" />
@@ -67,6 +81,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -312,6 +327,7 @@
       <workItem from="1614113885854" duration="768000" />
       <workItem from="1614195508466" duration="1844000" />
       <workItem from="1614284150624" duration="972000" />
+      <workItem from="1615127480463" duration="7859000" />
     </task>
     <servers />
   </component>

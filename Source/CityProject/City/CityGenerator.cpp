@@ -3,6 +3,9 @@
 
 #include "CityGenerator.h"
 
+#include "CityProject/CityProject.h"
+#include "Components/HierarchicalInstancedStaticMeshComponent.h"
+
 FCityBuilding::FCityBuilding()
 	: FCityBuilding(0,0)
 {
@@ -36,6 +39,8 @@ ACityGenerator::CityBlock::CityBlock(FVector2D BlockSize, FVector2D BlockLocatio
 	}
 
 	int BuildingMaxSize = City->GetMaxBuildingSize();
+
+	FloorMaterialIndex = FMath::RandRange(0, City->FloorMaterials.Num() - 1);
 	
 	for(int x = 0; x < BlockSize.X; ++x)
 	{
@@ -176,12 +181,9 @@ ACityGenerator::ACityGenerator()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+	bRunConstructionScriptOnDrag = false;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-	
-	FloorMeshComponent = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("City Block Meshes"));
-	FloorMeshComponent->SetupAttachment(RootComponent);
-	FloorMeshComponent->SetStaticMesh(FloorMesh);
 }
 
 void ACityGenerator::Randomize()
@@ -198,7 +200,10 @@ void ACityGenerator::Randomize()
 
 void ACityGenerator::ClearCity_Implementation()
 {
-	FloorMeshComponent->ClearInstances();
+	for(int i = 0; i < FloorMeshesComponent.Num(); ++i)
+	{
+		FloorMeshesComponent[i]->ClearInstances();
+	}
 	
 	for(int i = 0; i < BuildingMeshesComponent.Num(); ++i)
 	{
@@ -285,7 +290,7 @@ void ACityGenerator::CreateMeshes_Implementation()
 		relativeLocation.X += (BaseBlockSize * CityBlocks[i].BlockSize.X) / 2;
 		relativeLocation.Y += (BaseBlockSize * CityBlocks[i].BlockSize.Y) / 2;
 		
-		FloorMeshComponent->AddInstance(FTransform(FRotator(0,0,0), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
+		FloorMeshesComponent[CityBlocks[i].FloorMaterialIndex]->AddInstance(FTransform(FRotator(0,0,0), relativeLocation, FVector(CityBlocks[i].BlockSize.X,CityBlocks[i].BlockSize.Y, 1)));
 
 		CityBlocks[i].CreateMeshes(this);
 	}
@@ -293,7 +298,10 @@ void ACityGenerator::CreateMeshes_Implementation()
 
 void ACityGenerator::ShowCity()
 {
-	FloorMeshComponent->SetVisibility(true);
+	for(int i = 0; i < FloorMeshesComponent.Num(); ++i)
+	{
+		FloorMeshesComponent[i]->SetVisibility(true);
+	}
 	for(int i = 0; i < BuildingMeshesComponent.Num(); ++i)
 	{
 		BuildingMeshesComponent[i]->SetVisibility(true);
@@ -302,7 +310,10 @@ void ACityGenerator::ShowCity()
 
 void ACityGenerator::HideCity()
 {
-	FloorMeshComponent->SetVisibility(false);
+	for(int i = 0; i < FloorMeshesComponent.Num(); ++i)
+	{
+		FloorMeshesComponent[i]->SetVisibility(false);
+	}
 	for(int i = 0; i < BuildingMeshesComponent.Num(); ++i)
 	{
 		BuildingMeshesComponent[i]->SetVisibility(false);
@@ -431,17 +442,58 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	//Randomize();
-	
-	FloorMeshComponent->InstanceStartCullDistance = InstancedMeshComponentsStartCullDistance;
-	FloorMeshComponent->InstanceEndCullDistance = InstancedMeshComponentsStartCullDistance;
-	FloorMeshComponent->SetStaticMesh(FloorMesh);
+
+	for(int i = 0; i < FloorMaterials.Num(); ++i)
+	{
+		FString str = FString("City Block Floor Meshes ");
+		str.AppendInt(i);
+		if(FloorMeshesComponent.Num() <= i)
+		{
+			FloorMeshesComponent.AddZeroed();
+		}
+
+		if(!IsValid(FloorMeshesComponent[i]))
+		{
+			if(!FloorMesh || FloorMesh->GetNumLODs() == 1)
+			{
+				FloorMeshesComponent[i] = NewObject<UInstancedStaticMeshComponent>(this, UInstancedStaticMeshComponent::StaticClass(), FName(str));
+			}
+			else
+			{
+				FloorMeshesComponent[i] = NewObject<UHierarchicalInstancedStaticMeshComponent>(this, UHierarchicalInstancedStaticMeshComponent::StaticClass(), FName(str));
+			}
+
+			FloorMeshesComponent[i]->SetupAttachment(RootComponent);
+			FloorMeshesComponent[i]->RegisterComponent();
+		}
+		
+		FloorMeshesComponent[i]->InstanceStartCullDistance = InstancedMeshComponentsStartCullDistance;
+		FloorMeshesComponent[i]->InstanceEndCullDistance = InstancedMeshComponentsStartCullDistance;
+		FloorMeshesComponent[i]->SetStaticMesh(FloorMesh);
+		FloorMeshesComponent[i]->SetMaterial(0,FloorMaterials[i]);
+	}
+
+	for(int i = FloorMeshesComponent.Num() - 1; i >= FloorMaterials.Num(); --i)
+	{
+		FloorMeshesComponent.RemoveAt(i);
+	}
 	
 	for(int i = 0; i < BuildingMeshes.Num(); ++i)
-	{
+	{		
+		FString str = FString("Building Mesh Component ");
+		str.AppendInt(i);
 		if(BuildingMeshesComponent.Num() <= i || !IsValid(BuildingMeshesComponent[i]))
 		{
-			FString str = FString("Building Mesh Component " + i);
-			UInstancedStaticMeshComponent* NewComp = NewObject<UInstancedStaticMeshComponent>(this, UInstancedStaticMeshComponent::StaticClass(), FName(str));
+			UInstancedStaticMeshComponent* NewComp;
+			
+			if(!BuildingMeshes[i].Mesh || BuildingMeshes[i].Mesh->GetNumLODs() == 1)
+			{
+				NewComp = NewObject<UInstancedStaticMeshComponent>(this, UInstancedStaticMeshComponent::StaticClass(), FName(str));
+			}
+			else
+			{
+				NewComp = NewObject<UHierarchicalInstancedStaticMeshComponent>(this, UHierarchicalInstancedStaticMeshComponent::StaticClass(), FName(str));
+			}
 			
 			NewComp->SetupAttachment(RootComponent);
 			NewComp->RegisterComponent();
@@ -453,6 +505,15 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 		
 		if(BuildingMeshesComponent[i]->GetStaticMesh() != BuildingMeshes[i].Mesh)
 		{
+			if(!BuildingMeshes[i].Mesh || (BuildingMeshes[i].Mesh->GetNumLODs() == 1 && BuildingMeshesComponent[i]->IsA(UHierarchicalInstancedStaticMeshComponent::StaticClass())))
+			{
+				BuildingMeshesComponent[i] = NewObject<UInstancedStaticMeshComponent>(this, UInstancedStaticMeshComponent::StaticClass(), FName(str));
+			}
+			else if(BuildingMeshes[i].Mesh->GetNumLODs() != 1 && !BuildingMeshesComponent[i]->IsA(UHierarchicalInstancedStaticMeshComponent::StaticClass()))
+			{
+				BuildingMeshesComponent[i] = NewObject<UHierarchicalInstancedStaticMeshComponent>(this, UHierarchicalInstancedStaticMeshComponent::StaticClass(), FName(str));
+			}
+			
 			BuildingMeshesComponent[i]->SetStaticMesh(BuildingMeshes[i].Mesh);	
 		}
 
@@ -461,9 +522,9 @@ void ACityGenerator::OnConstruction(const FTransform& Transform)
 		
 	}
 
-	for(int i = BuildingMeshesComponent.Num(); i >= BuildingMeshes.Num(); --i)
+	for(int i = BuildingMeshesComponent.Num() - 1; i >= BuildingMeshes.Num(); --i)
 	{
-		//BuildingMeshesComponent.RemoveAt(i);
+		BuildingMeshesComponent.RemoveAt(i);
 	}
 }
 
